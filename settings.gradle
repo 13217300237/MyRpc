@@ -1,0 +1,1 @@
+include ':app', ':client', ':service', ':ipc', ':client2'
