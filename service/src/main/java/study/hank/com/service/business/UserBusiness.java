@@ -1,6 +1,7 @@
 package study.hank.com.service.business;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import study.hank.com.ipc.ServiceId;
 
@@ -28,12 +29,11 @@ public class UserBusiness implements IUserBusiness {
 
     @Override
     public boolean login(String userName, String password) {
+        Log.d("UserBusinessTag", "参数:" + userName + "-" + password);
+        Log.d("UserBusinessTag", "本地的:" + mUsername + "-" + mPassword);
         if (TextUtils.isEmpty(userName) && TextUtils.isEmpty(password)) {
             return false;
         }
-        if (mUsername.equals(userName) && mPassword.equals(password)) {
-            return true;
-        }
-        return false;
+        return userName.equals(mUsername) && password.equals(mPassword);
     }
 }

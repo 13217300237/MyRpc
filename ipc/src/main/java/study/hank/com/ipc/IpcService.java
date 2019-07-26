@@ -67,13 +67,18 @@ public abstract class IpcService extends Service {
                         Object o = Registry.getInstance().getObject(serviceId);
                         if (o != null) {
                             try {
+                                Log.d(TAG, "1:methodName:" + method.getName());
+                                for (int i = 0; i < paramObjs.length; i++) {
+                                    Log.d(TAG, "1:paramObjs     " + paramObjs[i]);
+                                }
                                 Object res = method.invoke(o, paramObjs);
+                                Log.d(TAG, "2");
                                 return new Response(gson.toJson(res), true);
                             } catch (Exception e) {
-                                e.printStackTrace();
-                                return new Response("业务方法执行失败", false);
+                                return new Response("业务方法执行失败" + e.getMessage(), false);
                             }
                         }
+                        Log.d(TAG, "3");
                         break;
                 }
                 return null;

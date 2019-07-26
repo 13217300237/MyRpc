@@ -27,6 +27,7 @@
             android:process=":user" />
         <service
             android:name=".UserBusinessService"
+            android:exported="true"
             android:process=":user" />
     </application>
 

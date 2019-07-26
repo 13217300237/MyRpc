@@ -58,7 +58,7 @@ public class Registry {
         for (Method method : business.getMethods()) {
             String methodName = method.getName();
             Class<?>[] parameterTypes = method.getParameterTypes();
-            String methodMapKey = getMethodMapKey(methodName, parameterTypes);
+            String methodMapKey = getMethodMapKeyWithClzArr(methodName, parameterTypes);
             tempMethodMap.put(methodMapKey, method);
         }
 
@@ -89,7 +89,7 @@ public class Registry {
      * @param <T>
      * @return
      */
-    private <T> String getMethodMapKey(String methodName, T[] paras) {
+    private String getMethodMapKeyWithObjArr(String methodName, Object[] paras) {
         StringBuilder builder = new StringBuilder(methodName + "(");
         for (int i = 0; i < paras.length; i++) {
             if (i != 0) {
@@ -98,6 +98,20 @@ public class Registry {
             builder.append(paras[i].getClass().getName()); //把参数列表拼装起来，一起作为一个key
         }
         builder.append(")");
+        Log.d("getMethodMapKey", "" + builder.toString());
+        return builder.toString();
+    }
+
+    private String getMethodMapKeyWithClzArr(String methodName, Class[] paras) {
+        StringBuilder builder = new StringBuilder(methodName + "(");
+        for (int i = 0; i < paras.length; i++) {
+            if (i != 0) {
+                builder.append(",");
+            }
+            builder.append(paras[i].getName()); //把参数列表拼装起来，一起作为一个key
+        }
+        builder.append(")");
+        Log.d("getMethodMapKey", "" + builder.toString());
         return builder.toString();
     }
 
@@ -113,7 +127,7 @@ public class Registry {
      */
     public Method findMethod(String serviceId, String methodName, Object[] paras) {
         ConcurrentHashMap<String, Method> map = mMethodMap.get(serviceId);
-        String methodMapKey = getMethodMapKey(methodName, paras); //同样的方式，构建一个StringBuilder
+        String methodMapKey = getMethodMapKeyWithObjArr(methodName, paras); //同样的方式，构建一个StringBuilder
         return map.get(methodMapKey);
     }
 

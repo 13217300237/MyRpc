@@ -83,7 +83,8 @@ public class Request implements Parcelable {
         this.parameters = parameters;
     }
 
-    public Request(String serviceId, String methodName, Parameter[] parameters) {
+    public Request(int type, String serviceId, String methodName, Parameter[] parameters) {
+        this.type = type;
         this.serviceId = serviceId;
         this.methodName = methodName;
         this.parameters = parameters;
